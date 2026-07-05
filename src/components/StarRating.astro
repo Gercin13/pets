@@ -1,0 +1,32 @@
+---
+// Accessible fractional star rating. Renders a grey base row with a clipped gold
+// overlay whose width = rating/max, so 4.8/5 shows exactly 96% of the stars filled.
+interface Props {
+  rating: number;
+  max?: number;
+  showValue?: boolean;
+}
+const { rating, max = 5, showValue = true } = Astro.props;
+const pct = Math.max(0, Math.min(100, (rating / max) * 100));
+const stars = Array.from({ length: max });
+const star =
+  'M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.36 4.18a1 1 0 0 0 .95.69h4.4c.97 0 1.37 1.24.59 1.81l-3.56 2.59a1 1 0 0 0-.36 1.12l1.36 4.18c.3.92-.76 1.69-1.54 1.12l-3.56-2.59a1 1 0 0 0-1.18 0l-3.56 2.59c-.78.57-1.84-.2-1.54-1.12l1.36-4.18a1 1 0 0 0-.36-1.12L2.1 9.6c-.78-.57-.38-1.81.59-1.81h4.4a1 1 0 0 0 .95-.69L9.05 2.93Z';
+---
+
+<div class="flex items-center gap-2">
+  <div class="relative inline-flex" role="img" aria-label={`${rating} out of ${max} stars`}>
+    <div class="flex text-charcoal/15">
+      {stars.map(() => (
+        <svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4 shrink-0"><path d={star} /></svg>
+      ))}
+    </div>
+    <div class="absolute inset-0 flex overflow-hidden text-[#e0a43b]" style={`width:${pct}%`} aria-hidden="true">
+      {stars.map(() => (
+        <svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4 shrink-0"><path d={star} /></svg>
+      ))}
+    </div>
+  </div>
+  {showValue && (
+    <span class="font-sans text-sm font-bold text-charcoal">{rating.toFixed(1)}<span class="font-normal text-charcoal/40">/{max}</span></span>
+  )}
+</div>

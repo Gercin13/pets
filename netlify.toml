@@ -1,0 +1,15 @@
+# PetExpert — Netlify build config (Astro SSR via @astrojs/netlify).
+# The adapter emits the on-demand Function for "/" automatically; static pages ship from dist/.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+  # Pin your canonical domain so hreflang/canonical use the real origin.
+  # If unset, astro.config falls back to Netlify's own $URL.
+  # SITE_URL = "https://petexpert.com"
+
+# ⚠️ Do NOT add a static catch-all like `/* -> /en` here — it would shadow the
+# Accept-Language redirect Function on "/". The adapter wires routing for you.

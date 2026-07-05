@@ -1,0 +1,35 @@
+---
+// Minimal EN | DE | UK toggle. Keeps the current sub-path, marks the active locale
+// in terracotta, and uses `divide-x` for the hairline pipe separators.
+import { getLangFromUrl, useTranslations, switchLangPath } from '../i18n/utils';
+import { languages, type Lang } from '../i18n/ui';
+
+const current = getLangFromUrl(Astro.url);
+const t = useTranslations(current);
+const entries = Object.entries(languages) as [Lang, string][];
+---
+
+<div
+  role="group"
+  aria-label={t('a11y.langSwitcher')}
+  class="flex items-center divide-x divide-charcoal/20 font-sans text-xs font-bold tracking-widest"
+>
+  {
+    entries.map(([code, label]) => {
+      const isCurrent = code === current;
+      return (
+        <a
+          href={switchLangPath(Astro.url, code)}
+          hreflang={code}
+          aria-current={isCurrent ? 'true' : undefined}
+          class:list={[
+            'px-2 leading-none transition-colors first:pl-0 last:pr-0',
+            isCurrent ? 'text-terracotta' : 'text-charcoal/50 hover:text-charcoal',
+          ]}
+        >
+          {label}
+        </a>
+      );
+    })
+  }
+</div>

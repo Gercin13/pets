@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PetExpert (home preview)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { theme: { extend: {
+        colors: { 'warm-sand': '#fff8f5', 'surface-lowest': '#ffffff', 'surface-container': '#f7efe9', 'surface-container-high': '#f0e5dd', charcoal: '#1e1b18', primary: '#334f2b', 'primary-soft': '#e9f1e4', terracotta: '#822a19', outline: '#d9cabf', 'outline-variant': '#cabaad' },
+        fontFamily: { serif: ['"Source Serif 4"', 'Georgia', 'serif'], sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'] },
+        fontSize: {
+          'label-bold': ['14px', { letterSpacing: '0.05em', fontWeight: '700', lineHeight: '1' }],
+          'label-sm': ['12px', { letterSpacing: '0.03em', fontWeight: '500', lineHeight: '1.5' }],
+          'display-lg': ['3.75rem', { letterSpacing: '-0.02em', fontWeight: '700', lineHeight: '1.05' }],
+        },
+      } } };
+    </script>
+    <style>
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; } .no-scrollbar::-webkit-scrollbar { display: none; }
+      .edge-fade { -webkit-mask-image: linear-gradient(to right, transparent, #000 1.25rem, #000 calc(100% - 1.25rem), transparent); mask-image: linear-gradient(to right, transparent, #000 1.25rem, #000 calc(100% - 1.25rem), transparent); }
+    </style>
+  </head>
+  <body class="flex min-h-screen flex-col bg-warm-sand font-sans text-charcoal antialiased">
+    <!-- HEADER -->
+    <header class="sticky top-0 z-50 border-b border-charcoal/10 bg-warm-sand/90 backdrop-blur-md">
+      <div class="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+        <a href="#" class="shrink-0 font-serif text-2xl font-bold tracking-tight text-primary">PetExpert</a>
+        <nav class="hidden lg:flex lg:flex-1 lg:justify-center" aria-label="Main navigation">
+          <ul class="flex items-stretch gap-8">
+            <li><a href="#" class="flex h-16 items-center whitespace-nowrap font-sans text-label-bold text-charcoal/70 transition-colors hover:text-charcoal">Choosing a Pet</a></li>
+            <li><a href="#" class="flex h-16 items-center whitespace-nowrap font-sans text-label-bold text-charcoal/70 transition-colors hover:text-charcoal">Training</a></li>
+            <li><a href="#" class="flex h-16 items-center whitespace-nowrap font-sans text-label-bold text-charcoal/70 transition-colors hover:text-charcoal">Health</a></li>
+            <li><a href="#" class="flex h-16 items-center whitespace-nowrap font-sans text-label-bold text-charcoal/70 transition-colors hover:text-charcoal">Nutrition</a></li>
+            <li><a href="#" class="flex h-16 items-center whitespace-nowrap font-sans text-label-bold text-charcoal/70 transition-colors hover:text-charcoal">Pet Life</a></li>
+          </ul>
+        </nav>
+        <div class="flex shrink-0 items-center gap-1 sm:gap-2">
+          <button type="button" aria-label="Search" class="rounded-full p-2 text-charcoal/70 hover:bg-charcoal/5 hover:text-charcoal"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" /></svg></button>
+          <div class="mx-1 hidden h-5 w-px bg-charcoal/15 sm:block"></div>
+          <div class="flex items-center divide-x divide-charcoal/20 font-sans text-xs font-bold tracking-widest"><a href="#" class="px-2 leading-none text-terracotta first:pl-0 last:pr-0">EN</a><a href="#" class="px-2 leading-none text-charcoal/50 hover:text-charcoal first:pl-0 last:pr-0">DE</a><a href="#" class="px-2 leading-none text-charcoal/50 hover:text-charcoal first:pl-0 last:pr-0">UK</a></div>
+          <button type="button" aria-label="Account" class="rounded-full p-2 text-charcoal/70 hover:bg-charcoal/5 hover:text-charcoal"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /></svg></button>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex-1">
+      <!-- HERO -->
+      <section class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-20">
+        <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+          <div>
+            <h1 class="font-serif text-[2.5rem] font-bold leading-[1.05] tracking-tight text-primary md:text-display-lg">Your Guide to a World of Happy Pets</h1>
+            <p class="mt-6 max-w-xl font-sans text-lg leading-relaxed text-charcoal/70">Vet-reviewed advice on health, nutrition, training and everyday life with the animals you love.</p>
+            <form class="mt-8 max-w-md" role="search">
+              <div class="relative">
+                <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-charcoal/40"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" /></svg></span>
+                <input type="search" placeholder="Search articles, breeds, tips…" class="w-full rounded-full border border-outline bg-surface-lowest py-3.5 pl-12 pr-4 font-sans text-charcoal shadow-sm placeholder:text-charcoal/40 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20" />
+              </div>
+            </form>
+          </div>
+          <div class="relative"><img src="https://pub.hyperagent.com/api/published/pbf01KWRXGR2G_THPJECKXNFDXC9JJ/83085a57-2004-4779-ae89-0939ec41da08.png" alt="A young woman relaxing on a sofa with a golden retriever and a cat" class="w-full rounded-xl object-cover shadow-xl ring-1 ring-charcoal/5" /></div>
+        </div>
+      </section>
+
+      <!-- LATEST -->
+      <section class="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
+        <div class="flex items-end justify-between gap-4">
+          <h2 class="font-serif text-3xl font-bold text-charcoal md:text-4xl">Latest Articles</h2>
+          <a href="#" class="group inline-flex shrink-0 items-center gap-1.5 font-sans text-label-bold text-primary">View all<svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4 transition-transform group-hover:translate-x-1"><path fill-rule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clip-rule="evenodd" /></svg></a>
+        </div>
+        <div class="mt-8 grid gap-6 lg:grid-cols-2">
+          <!-- Featured -->
+          <a href="#" class="group relative flex min-h-[24rem] flex-col justify-end overflow-hidden rounded-lg p-6 shadow-sm ring-1 ring-charcoal/5 sm:p-8 lg:min-h-[30rem]">
+            <img src="https://pub.hyperagent.com/api/published/pbf01KWRXGRGP_52YZACAHZD0ZRS8X/05a01d64-e8af-41ce-ad0d-68a91ef72e80.png" alt="" class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+            <div class="absolute inset-0 bg-gradient-to-t from-charcoal/90 via-charcoal/45 to-transparent"></div>
+            <div class="relative">
+              <span class="inline-block rounded-full bg-terracotta px-3 py-1 font-sans text-label-sm font-bold text-warm-sand">Nutrition</span>
+              <h3 class="mt-3 max-w-xl font-serif text-2xl font-bold leading-snug text-warm-sand md:text-3xl">The Complete Guide to Natural Feeding</h3>
+              <p class="mt-2 max-w-lg font-sans text-sm leading-relaxed text-warm-sand/80">Everything you need to plan a balanced, species-appropriate raw or home-cooked diet — safely.</p>
+              <div class="mt-5 flex items-center gap-3"><img src="https://pub.hyperagent.com/api/published/pbf01KWRTG9QX_N1P7FTMM4HQY2Y23/8b4b3c72-8a9e-4714-a42d-813a6c7393f9.png" alt="Dr. Anna Smirnova" class="h-9 w-9 rounded-full object-cover ring-2 ring-warm-sand/30" /><div class="font-sans text-label-sm text-warm-sand/80"><span class="font-bold text-warm-sand">Dr. Anna Smirnova</span> · 12 min read</div></div>
+            </div>
+          </a>
+          <!-- Small cards -->
+          <div class="flex flex-col gap-6">
+            <a href="#" class="group flex flex-1 overflow-hidden rounded-lg bg-surface-lowest shadow-sm ring-1 ring-charcoal/5 transition-shadow hover:shadow-md">
+              <img src="https://pub.hyperagent.com/api/published/pbf01KWRXGRZ2_HJ9WBG7CN5BXERA4/300c6948-02da-41d0-93ea-7ff5e90c6c14.png" alt="" class="w-2/5 shrink-0 object-cover" />
+              <div class="flex flex-1 flex-col justify-center p-5"><span class="w-fit rounded-full bg-primary/10 px-2.5 py-0.5 font-sans text-label-sm font-bold text-primary">Kittens</span><h3 class="mt-2 font-serif text-lg font-bold leading-snug text-charcoal transition-colors group-hover:text-primary">Bringing a New Kitten Home: The First 30 Days</h3><span class="mt-2 font-sans text-label-sm text-charcoal/50">6 min read</span></div>
+            </a>
+            <a href="#" class="group flex flex-1 overflow-hidden rounded-lg bg-surface-lowest shadow-sm ring-1 ring-charcoal/5 transition-shadow hover:shadow-md">
+              <img src="https://pub.hyperagent.com/api/published/pbf01KWRXGSF6_2FCTZVG3G46FPXBX/e907a28a-d9a8-4676-982c-717833b44853.png" alt="" class="w-2/5 shrink-0 object-cover" />
+              <div class="flex flex-1 flex-col justify-center p-5"><span class="w-fit rounded-full bg-primary/10 px-2.5 py-0.5 font-sans text-label-sm font-bold text-primary">Senior Care</span><h3 class="mt-2 font-serif text-lg font-bold leading-snug text-charcoal transition-colors group-hover:text-primary">Caring for Senior Dogs: Comfort in the Golden Years</h3><span class="mt-2 font-sans text-label-sm text-charcoal/50">8 min read</span></div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- NEWSLETTER -->
+      <section class="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
+        <div class="rounded-lg bg-primary px-6 py-10 sm:px-10 lg:px-14 lg:py-12">
+          <div class="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+            <div class="max-w-xl"><h2 class="font-serif text-2xl font-bold text-warm-sand md:text-3xl">Get expert tips straight to your inbox</h2><p class="mt-3 font-sans leading-relaxed text-warm-sand/80">Join 25,000 pet parents getting our weekly, vet-reviewed newsletter — practical advice, no spam.</p></div>
+            <form class="w-full lg:w-auto lg:shrink-0">
+              <div class="flex flex-col gap-3 sm:flex-row">
+                <input type="email" placeholder="Your email address" class="w-full rounded-lg border-0 bg-surface-lowest px-4 py-3 font-sans text-charcoal placeholder:text-charcoal/40 focus:outline-none focus:ring-2 focus:ring-warm-sand/60 sm:w-72" />
+                <button type="submit" class="rounded-lg bg-terracotta px-6 py-3 font-sans text-label-bold text-warm-sand transition-colors hover:bg-terracotta/90">Subscribe</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-charcoal/10 bg-warm-sand">
+      <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div class="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
+          <div class="max-w-sm"><a href="#" class="font-serif text-2xl font-bold tracking-tight text-primary">PetExpert</a><p class="mt-3 font-serif text-lg italic text-charcoal/80">Expert Care in a Cozy Home.</p><p class="mt-5 font-sans text-label-sm text-charcoal/50">© 2026 PetExpert. All rights reserved.</p></div>
+          <nav aria-label="Footer navigation"><ul class="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-x-8 sm:gap-y-3"><li><a href="#" class="font-sans text-label-bold text-charcoal hover:text-primary">About Us</a></li><li><a href="#" class="font-sans text-label-bold text-charcoal hover:text-primary">Contact</a></li><li><a href="#" class="font-sans text-label-bold text-charcoal hover:text-primary">Privacy Policy</a></li><li><a href="#" class="font-sans text-label-bold text-charcoal hover:text-primary">Terms of Service</a></li></ul></nav>
+        </div>
+        <div class="mt-10 border-t border-charcoal/10 pt-6"><p class="max-w-2xl font-sans text-label-sm text-charcoal/50">Affiliate Disclosure: We may earn a commission when you buy through links on our site.</p></div>
+      </div>
+    </footer>
+  </body>
+</html>

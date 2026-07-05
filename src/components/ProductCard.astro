@@ -1,0 +1,75 @@
+---
+// Reusable affiliate product card — drop it inside an MDX article body.
+// Warm Professionalism: dashed forest-green frame, faint green tint, paw glyph, terracotta CTA.
+// Marked `not-prose` so the article's reading typography never restyles its internals.
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  productName: string;
+  image: string;
+  href: string;
+  description: string;
+  imageAlt?: string;
+  eyebrow?: string; // small kicker above the name
+  ctaLabel?: string; // button text
+  lang?: Lang; // localizes the default eyebrow + CTA when the caller doesn't pass them
+}
+
+// Localized fallbacks for the two label slots. Used only when the caller omits them,
+// so existing EN usages that pass `ctaLabel`/`eyebrow` explicitly render unchanged.
+const labels = {
+  en: { eyebrow: 'Recommended for this diet', cta: 'Buy from partner' },
+  de: { eyebrow: 'Empfohlen für diese Ernährung', cta: 'Beim Partner kaufen' },
+  uk: { eyebrow: 'Рекомендовано для цього раціону', cta: 'Купити в партнера' },
+} satisfies Record<Lang, { eyebrow: string; cta: string }>;
+
+const {
+  productName,
+  image,
+  href,
+  description,
+  imageAlt = '',
+  lang = 'en',
+  eyebrow = labels[lang].eyebrow,
+  ctaLabel = labels[lang].cta,
+} = Astro.props;
+---
+
+<aside class="not-prose relative my-8 rounded-lg border border-dashed border-primary bg-primary/5 p-5 sm:p-6">
+  <!-- Decorative paw glyph, top-right -->
+  <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" class="absolute right-4 top-4 h-6 w-6 text-primary/25">
+    <path d="M8.35 3C7.33 3 6.5 4.16 6.5 5.6s.83 2.6 1.85 2.6 1.85-1.16 1.85-2.6S9.37 3 8.35 3Zm7.3 0c-1.02 0-1.85 1.16-1.85 2.6s.83 2.6 1.85 2.6 1.85-1.16 1.85-2.6S16.67 3 15.65 3ZM3.9 7.2c-.98 0-1.77 1.02-1.77 2.28S2.92 11.76 3.9 11.76s1.77-1.02 1.77-2.28S4.88 7.2 3.9 7.2Zm16.2 0c-.98 0-1.77 1.02-1.77 2.28s.79 2.28 1.77 2.28 1.77-1.02 1.77-2.28S21.08 7.2 20.1 7.2ZM12 12c-2.5 0-4.7 2.3-5.1 4.6-.28 1.6 1 3 2.6 2.7 1.6-.3 3.4-.3 5 0 1.6.3 2.88-1.1 2.6-2.7C16.7 14.3 14.5 12 12 12Z" />
+  </svg>
+
+  <div class="flex flex-col items-center gap-5 sm:flex-row sm:items-stretch">
+    <!-- Product image -->
+    <div class="shrink-0">
+      <img
+        src={image}
+        alt={imageAlt || productName}
+        class="h-28 w-28 rounded-lg bg-surface-lowest object-contain p-1.5 ring-1 ring-primary/10"
+        loading="lazy"
+      />
+    </div>
+
+    <!-- Copy + CTA -->
+    <div class="flex flex-1 flex-col text-center sm:pr-8 sm:text-left">
+      <span class="font-sans text-label-sm font-bold uppercase tracking-wide text-primary">{eyebrow}</span>
+      <h4 class="mt-1 font-serif text-lg font-bold text-charcoal">{productName}</h4>
+      <p class="mt-1.5 font-sans text-sm leading-relaxed text-charcoal/70">{description}</p>
+      <div class="mt-4 sm:mt-auto sm:pt-4">
+        <a
+          href={href}
+          target="_blank"
+          rel="sponsored noopener noreferrer"
+          class="inline-flex items-center justify-center gap-2 rounded-lg bg-terracotta px-5 py-2.5 font-sans text-label-bold text-warm-sand transition-colors hover:bg-terracotta/90"
+        >
+          {ctaLabel}
+          <svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
+            <path fill-rule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clip-rule="evenodd" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</aside>

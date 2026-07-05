@@ -1,0 +1,41 @@
+---
+// Root route "/" → redirect to the visitor's preferred language.
+//
+// Rendered on demand so it can read the Accept-Language request header. This requires
+// an SSR adapter (see astro.config.mjs). Detection order:
+//   1. Astro.preferredLocale — Astro matches Accept-Language against i18n.locales
+//   2. manual Accept-Language parse (belt-and-suspenders)
+//   3. defaultLocale
+//
+// Static-only host (no adapter)? Remove `prerender = false` below — the build will emit a
+// static redirect to the default locale (/en). For per-browser detection without SSR, use a
+// client-side variant instead (navigator.language + <meta http-equiv="refresh">).
+export const prerender = false;
+
+import { languages, defaultLang } from '../i18n/ui';
+
+const supported = Object.keys(languages) as string[];
+
+function fromAcceptLanguage(header: string | null): string | undefined {
+  if (!header) return undefined;
+  return header
+    .split(',')
+    .map((part) => {
+      const [tag, q] = part.trim().split(';q=');
+      return { base: tag.toLowerCase().split('-')[0], q: q ? parseFloat(q) : 1 };
+    })
+    .sort((a, b) => b.q - a.q)
+    .find((entry) => supported.includes(entry.base))?.base;
+}
+
+const preferred =
+  (Astro.preferredLocale && supported.includes(Astro.preferredLocale) ? Astro.preferredLocale : undefined) ??
+  fromAcceptLanguage(Astro.request.headers.get('accept-language')) ??
+  defaultLang;
+
+// Emit the 302 via response headers instead of a top-level `return Astro.redirect(...)`:
+// astro check doesn't count reads inside a frontmatter top-level return, so returning that
+// way makes it wrongly flag `preferred` as unused (ts6133). This reads it in a plain statement.
+Astro.response.status = 302;
+Astro.response.headers.set('Location', `/${preferred}`);
+---

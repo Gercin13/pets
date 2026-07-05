@@ -1,0 +1,98 @@
+---
+// Generic category page for the nav sections that don't (yet) have a bespoke page:
+// choosing-a-pet, training, nutrition, pet-life. (Health has its own health.astro;
+// Best Picks has best-picks.astro — both excluded below so routes don't collide.)
+// Localized heading via the matching nav key; scaffolded body links to real sections.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { languages, navItems } from '../../i18n/ui';
+import { getLangFromUrl, useTranslations, localizePath } from '../../i18n/utils';
+
+export function getStaticPaths() {
+  const dedicated = new Set(['/health', '/best-picks', '/blog']); // these have their own pages
+  const cats = navItems.filter((i) => !dedicated.has(i.href));
+  return Object.keys(languages).flatMap((lang) =>
+    cats.map((i) => ({ params: { lang, category: i.href.slice(1) }, props: { navKey: i.key } })),
+  );
+}
+
+const { navKey } = Astro.props as { navKey: Parameters<ReturnType<typeof useTranslations>>[0] };
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const title = t(navKey);
+
+const arrow =
+  'M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z';
+
+// Real, always-available destinations to guide visitors while this section fills up.
+const explore = [
+  { title: t('nav.health'), image: '/img/health/sleeping-dog.jpg', href: localizePath('/health', lang) },
+  { title: t('nav.picks'), image: '/img/picks/ortho-bed.jpg', href: localizePath('/best-picks', lang) },
+];
+---
+
+<BaseLayout title={`${title} — PetExpert`} description={t('cat.intro')}>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="pt-6">
+      <ol class="flex items-center gap-2 font-sans text-label-sm text-charcoal/50">
+        <li><a href={localizePath('/', lang)} class="transition-colors hover:text-charcoal">{t('crumb.home')}</a></li>
+        <li aria-hidden="true" class="text-charcoal/30">/</li>
+        <li aria-current="page" class="font-medium text-charcoal/70">{title}</li>
+      </ol>
+    </nav>
+
+    <!-- Header -->
+    <header class="max-w-3xl pb-10 pt-6">
+      <h1 class="font-serif text-[2rem] font-bold leading-tight text-charcoal md:text-5xl">{title}</h1>
+      <p class="mt-4 font-sans text-lg leading-relaxed text-charcoal/70">{t('cat.intro')}</p>
+    </header>
+
+    <div class="grid grid-cols-1 gap-8 pb-16 lg:grid-cols-4">
+      <!-- Sidebar -->
+      <aside class="order-last space-y-6 lg:order-none lg:col-span-1 lg:sticky lg:top-24 lg:self-start">
+        <form class="rounded-lg bg-surface-lowest p-6 shadow-sm ring-1 ring-charcoal/5">
+          <h2 class="font-serif text-lg font-bold text-charcoal">Filters</h2>
+          <fieldset class="mt-5">
+            <legend class="font-sans text-label-sm font-bold uppercase text-charcoal/50">Pet Type</legend>
+            <div class="mt-3 space-y-2.5">
+              {['Dogs', 'Cats', 'Rodents'].map((type) => (
+                <label class="flex cursor-pointer items-center gap-3 font-sans text-sm text-charcoal">
+                  <input type="checkbox" class="h-4 w-4 rounded border-outline accent-primary" />
+                  {type}
+                </label>
+              ))}
+            </div>
+          </fieldset>
+        </form>
+
+        <div class="rounded-lg border border-dashed border-outline-variant bg-warm-sand p-6">
+          <h2 class="font-serif text-lg font-bold text-charcoal">Need urgent advice?</h2>
+          <p class="mt-2 font-sans text-sm leading-relaxed text-charcoal/70">
+            Ask our on-call veterinarians — most questions get a reply within a few hours.
+          </p>
+          <a href={localizePath('/best-picks', lang)} class="mt-4 inline-flex w-full items-center justify-center rounded-lg bg-terracotta px-5 py-2.5 font-sans text-label-bold text-warm-sand transition-colors hover:bg-terracotta/90">
+            Ask a Question
+          </a>
+        </div>
+      </aside>
+
+      <!-- Main: scaffolded state + real cross-links -->
+      <div class="lg:col-span-3">
+        <div class="rounded-lg border border-dashed border-outline-variant bg-surface-lowest/60 p-8 text-center">
+          <p class="font-sans text-charcoal/70">{t('cat.explore')}</p>
+        </div>
+        <div class="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
+          {explore.map((c) => (
+            <a href={c.href} class="group flex flex-col overflow-hidden rounded-lg bg-surface-lowest shadow-sm ring-1 ring-charcoal/5 transition-shadow hover:shadow-md">
+              <img src={c.image} alt="" class="h-44 w-full object-cover" loading="lazy" />
+              <div class="flex items-center justify-between gap-3 p-5">
+                <h3 class="font-serif text-lg font-bold text-charcoal transition-colors group-hover:text-primary">{c.title}</h3>
+                <svg viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5 shrink-0 text-primary transition-transform group-hover:translate-x-1"><path fill-rule="evenodd" d={arrow} clip-rule="evenodd" /></svg>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

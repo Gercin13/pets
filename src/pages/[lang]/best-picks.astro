@@ -1,0 +1,205 @@
+---
+// "Our Picks for Your Pets" — the product recommendation / monetization page (Layout 3).
+// Four distinct card formats on a 12-col grid; everything stacks to one column on mobile.
+// Product content lives in the data objects below (swap for a CMS / content collection).
+// Retailer names + prices are placeholders — set them per market.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import StarRating from '../../components/StarRating.astro';
+import { languages } from '../../i18n/ui';
+import { getLangFromUrl } from '../../i18n/utils';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map((lang) => ({ params: { lang } }));
+}
+
+const lang = getLangFromUrl(Astro.url);
+
+// RU rubles (₽) + Ozon/Yandex are wrong for /uk and /de. Map each locale to a regional
+// affiliate store, currency and CTA. Prices + store URLs are placeholders — set the real
+// per-market values later.
+function byLang<T>(m: Record<string, T>): T {
+  return m[lang] ?? m['en'];
+}
+const store = byLang({
+  en: { name: 'Amazon', href: 'https://www.amazon.com/' },
+  de: { name: 'Zooplus', href: 'https://www.zooplus.de/' },
+  uk: { name: 'Rozetka', href: 'https://rozetka.com.ua/' },
+});
+const viewLabel = byLang({
+  en: `View on ${store.name}`,
+  de: `Bei ${store.name} ansehen`,
+  uk: `Дивитися на ${store.name}`,
+});
+const storeLabel = byLang({ en: 'Go to store', de: 'Zum Shop', uk: 'Перейти в магазин' });
+
+const heading = 'Our Picks for Your Pets';
+const intro =
+  'Independently tested and vet-reviewed. Every product here earns its place on merit — we may earn a commission if you buy through our links, but it never buys a spot on this page.';
+
+const hero = {
+  badge: "Expert's Choice",
+  name: 'OrthoRest Memory-Foam Orthopedic Bed',
+  rating: 4.8,
+  reviews: 1240,
+  price: byLang({ en: '$59', de: '59 €', uk: '2 490 ₴' }),
+  oldPrice: byLang({ en: '$66', de: '66 €', uk: '2 790 ₴' }),
+  discount: '−11%',
+  description:
+    'A dense memory-foam core relieves pressure on aching joints, with a removable, machine-washable cover in warm, home-friendly tones. Sizes for every breed.',
+  image: '/img/picks/ortho-bed.jpg',
+  imageAlt: 'OrthoRest orthopedic memory-foam dog bed in a sunlit room',
+  cta: viewLabel,
+  href: store.href,
+  expert: {
+    name: 'Dr. Igor Melnyk',
+    title: 'Veterinary orthopedist',
+    avatar: '/img/authors/igor-melnyk.jpg',
+    quote:
+      'I recommend this bed to every patient managing arthritis — the firmer foam core noticeably improves mobility within a few weeks.',
+  },
+};
+
+const food = {
+  name: 'Holistic Grain-Free Digestive Care',
+  price: byLang({ en: '$34', de: '34 €', uk: '1 450 ₴' }),
+  description: 'Single-source protein with prebiotic fibre — formulated for sensitive stomachs.',
+  image: '/img/picks/holistic-food.jpg',
+  imageAlt: 'Bowl of Holistic grain-free dog food',
+  badge: 'Approved by gastroenterologists',
+  cta: viewLabel,
+  href: store.href,
+};
+
+const toy = {
+  category: 'Toys',
+  name: 'SmartPaws Interactive Treat Puzzle',
+  price: byLang({ en: '$12', de: '12 €', uk: '540 ₴' }),
+  image: '/img/picks/puzzle-toy.jpg',
+  imageAlt: 'Interactive treat-dispensing puzzle toy',
+  tag: 'Builds problem-solving',
+  cta: viewLabel,
+  href: store.href,
+};
+
+const firstAid = {
+  name: 'PetSafe Travel First-Aid Kit',
+  price: byLang({ en: '$21', de: '21 €', uk: '950 ₴' }),
+  image: '/img/picks/first-aid.jpg',
+  imageAlt: 'Compact pet first-aid travel kit',
+  quote: 'A must-have for weekend trips and the summer house.',
+  quoteBy: 'Dr. Smirnova',
+  cta: storeLabel,
+  href: store.href,
+};
+
+const arrow =
+  'M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z';
+---
+
+<BaseLayout title={`${heading} — PetExpert`}>
+  <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+    <!-- Page header -->
+    <header class="max-w-3xl">
+      <p class="font-sans text-label-bold uppercase text-terracotta">PetExpert Recommends</p>
+      <h1 class="mt-3 font-serif text-[2rem] font-bold leading-tight text-charcoal md:text-5xl">{heading}</h1>
+      <p class="mt-4 font-sans text-lg leading-relaxed text-charcoal/70">{intro}</p>
+    </header>
+
+    <!-- Product grid -->
+    <div class="mt-10 grid grid-cols-1 gap-6 md:grid-cols-12">
+      <!-- ===== CARD 1 — Expert's Choice (full width) ===== -->
+      <article class="relative overflow-hidden rounded-lg bg-surface-lowest shadow-sm ring-1 ring-charcoal/5 md:col-span-12">
+        <span class="absolute left-0 top-6 z-10 inline-flex items-center gap-1.5 rounded-r-full bg-terracotta py-1.5 pl-4 pr-5 font-sans text-label-sm font-bold text-warm-sand shadow-md">
+          <svg viewBox="0 0 20 20" fill="currentColor" class="h-3.5 w-3.5"><path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.36 4.18a1 1 0 0 0 .95.69h4.4c.97 0 1.37 1.24.59 1.81l-3.56 2.59a1 1 0 0 0-.36 1.12l1.36 4.18c.3.92-.76 1.69-1.54 1.12l-3.56-2.59a1 1 0 0 0-1.18 0l-3.56 2.59c-.78.57-1.84-.2-1.54-1.12l1.36-4.18a1 1 0 0 0-.36-1.12L2.1 9.6c-.78-.57-.38-1.81.59-1.81h4.4a1 1 0 0 0 .95-.69L9.05 2.93Z" /></svg>
+          {hero.badge}
+        </span>
+        <div class="grid grid-cols-1 lg:grid-cols-2">
+          <div class="relative">
+            <img src={hero.image} alt={hero.imageAlt} class="h-72 w-full object-cover lg:h-full" />
+          </div>
+          <div class="flex flex-col p-6 sm:p-8 lg:p-10">
+            <div class="flex items-center gap-3">
+              <StarRating rating={hero.rating} />
+              <span class="font-sans text-sm text-charcoal/50">({hero.reviews.toLocaleString()} reviews)</span>
+            </div>
+            <h2 class="mt-3 font-serif text-2xl font-bold leading-snug text-charcoal md:text-3xl">{hero.name}</h2>
+            <p class="mt-3 font-sans leading-relaxed text-charcoal/70">{hero.description}</p>
+            <div class="mt-5 flex flex-wrap items-baseline gap-3">
+              <span class="font-serif text-3xl font-bold text-charcoal">{hero.price}</span>
+              <span class="font-sans text-lg text-charcoal/40 line-through">{hero.oldPrice}</span>
+              <span class="rounded bg-terracotta/10 px-2 py-0.5 font-sans text-label-sm font-bold text-terracotta">{hero.discount}</span>
+            </div>
+            <a href={hero.href} class="mt-6 inline-flex items-center justify-center gap-2 rounded-lg bg-terracotta px-6 py-3.5 font-sans text-label-bold text-warm-sand shadow-sm transition-colors hover:bg-terracotta/90">
+              {hero.cta}
+              <svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4"><path fill-rule="evenodd" d={arrow} clip-rule="evenodd" /></svg>
+            </a>
+            <!-- Embedded E-E-A-T expert quote -->
+            <figure class="mt-6 flex items-start gap-3 border-t border-charcoal/10 pt-5">
+              <img src={hero.expert.avatar} alt={hero.expert.name} class="h-11 w-11 shrink-0 rounded-full object-cover ring-2 ring-surface-lowest" />
+              <blockquote class="min-w-0">
+                <p class="font-serif text-sm italic leading-relaxed text-charcoal/80">“{hero.expert.quote}”</p>
+                <figcaption class="mt-1.5 font-sans text-label-sm text-charcoal/50">
+                  <span class="font-bold text-charcoal">{hero.expert.name}</span> · {hero.expert.title}
+                </figcaption>
+              </blockquote>
+            </figure>
+          </div>
+        </div>
+      </article>
+
+      <!-- ===== CARD 2 — Food (third) ===== -->
+      <article class="flex flex-col overflow-hidden rounded-lg bg-surface-lowest shadow-sm ring-1 ring-charcoal/5 md:col-span-4">
+        <img src={food.image} alt={food.imageAlt} class="aspect-[4/3] w-full object-cover" />
+        <div class="flex flex-1 flex-col p-5">
+          <span class="inline-flex w-fit items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 font-sans text-label-sm font-bold text-primary">
+            <svg viewBox="0 0 24 24" fill="currentColor" class="h-3.5 w-3.5"><path fill-rule="evenodd" d="M11.484 2.17a.75.75 0 0 1 1.032 0 11.2 11.2 0 0 0 7.877 3.08.75.75 0 0 1 .722.515c.42 1.256.635 2.596.635 3.985 0 5.942-4.064 10.933-9.563 12.348a.75.75 0 0 1-.374 0C6.316 20.683 2.25 15.692 2.25 9.75c0-1.39.215-2.73.635-3.985a.75.75 0 0 1 .722-.516l.143.001c2.996 0 5.718-1.17 7.734-3.08ZM15.6 10.2a.75.75 0 0 0-1.2-.9l-2.9 3.867-1.3-1.3a.75.75 0 1 0-1.06 1.06l1.92 1.92a.75.75 0 0 0 1.13-.08l3.41-4.567Z" clip-rule="evenodd" /></svg>
+            {food.badge}
+          </span>
+          <h3 class="mt-3 font-serif text-lg font-bold leading-snug text-charcoal">{food.name}</h3>
+          <p class="mt-2 font-sans text-sm leading-relaxed text-charcoal/70">{food.description}</p>
+          <div class="mt-auto flex items-center justify-between gap-4 pt-5">
+            <span class="font-serif text-2xl font-bold text-charcoal">{food.price}</span>
+            <a href={food.href} class="rounded-lg bg-surface-container px-5 py-2.5 font-sans text-label-bold text-charcoal transition-colors hover:bg-surface-container-high">{food.cta}</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ===== CARD 3 — Toy (third) ===== -->
+      <article class="flex flex-col overflow-hidden rounded-lg bg-surface-lowest shadow-sm ring-1 ring-charcoal/5 md:col-span-4">
+        <div class="relative">
+          <img src={toy.image} alt={toy.imageAlt} class="aspect-[4/3] w-full object-cover" />
+          <span class="absolute left-3 top-3 rounded-full bg-charcoal/75 px-2.5 py-1 font-sans text-label-sm font-bold text-warm-sand backdrop-blur-sm">{toy.category}</span>
+        </div>
+        <div class="flex flex-1 flex-col p-5">
+          <span class="inline-flex w-fit items-center rounded-full bg-primary/10 px-2.5 py-0.5 font-sans text-label-sm font-bold text-primary">{toy.tag}</span>
+          <h3 class="mt-2 font-serif text-base font-bold leading-snug text-charcoal">{toy.name}</h3>
+          <div class="mt-auto pt-4">
+            <span class="block font-serif text-xl font-bold text-charcoal">{toy.price}</span>
+            <a href={toy.href} class="mt-3 block w-full rounded-lg bg-surface-container px-4 py-2.5 text-center font-sans text-label-bold text-charcoal transition-colors hover:bg-surface-container-high">{toy.cta}</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ===== CARD 4 — First-aid (third) ===== -->
+      <article class="flex flex-col overflow-hidden rounded-lg bg-surface-lowest shadow-sm ring-1 ring-charcoal/5 md:col-span-4">
+        <img src={firstAid.image} alt={firstAid.imageAlt} class="aspect-[4/3] w-full object-cover" />
+        <div class="flex flex-1 flex-col p-5">
+          <h3 class="font-serif text-base font-bold leading-snug text-charcoal">{firstAid.name}</h3>
+          <span class="mt-1 font-serif text-xl font-bold text-charcoal">{firstAid.price}</span>
+          <blockquote class="mt-2 border-l-2 border-terracotta pl-3 font-serif text-sm italic leading-snug text-charcoal/70">
+            “{firstAid.quote}”
+            <cite class="mt-1 block font-sans text-label-sm not-italic text-charcoal/50">— {firstAid.quoteBy}</cite>
+          </blockquote>
+          <a href={firstAid.href} class="group mt-auto inline-flex items-center gap-1.5 pt-4 font-sans text-label-bold text-terracotta">
+            {firstAid.cta}
+            <svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4 transition-transform group-hover:translate-x-1"><path fill-rule="evenodd" d={arrow} clip-rule="evenodd" /></svg>
+          </a>
+        </div>
+      </article>
+    </div>
+
+    <p class="mt-8 font-sans text-label-sm text-charcoal/50">
+      Affiliate Disclosure: We may earn a commission when you buy through links on our site. Prices are indicative and set by the retailer.
+    </p>
+  </div>
+</BaseLayout>

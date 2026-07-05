@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Our Picks for Your Pets — PetExpert (preview)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = { theme: { extend: {
+        colors: { 'warm-sand': '#fff8f5', 'surface-lowest': '#ffffff', 'surface-container': '#f7efe9', 'surface-container-high': '#f0e5dd', charcoal: '#1e1b18', primary: '#334f2b', 'primary-soft': '#e9f1e4', terracotta: '#822a19', outline: '#d9cabf', 'outline-variant': '#cabaad' },
+        fontFamily: { serif: ['"Source Serif 4"', 'Georgia', 'serif'], sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'] },
+        fontSize: { 'label-bold': ['14px', { letterSpacing: '0.05em', fontWeight: '700', lineHeight: '1' }], 'label-sm': ['12px', { letterSpacing: '0.03em', fontWeight: '500', lineHeight: '1.5' }] },
+      } } };
+    </script>
+    <style>
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; } .no-scrollbar::-webkit-scrollbar { display: none; }
+      .edge-fade { -webkit-mask-image: linear-gradient(to right, transparent, #000 1.25rem, #000 calc(100% - 1.25rem), transparent); mask-image: linear-gradient(to right, transparent, #000 1.25rem, #000 calc(100% - 1.25rem), transparent); }
+    </style>
+  </head>
+  <body class="flex min-h-screen flex-col bg-warm-sand font-sans text-charcoal antialiased">
+    <!-- HEADER -->
+    <header class="sticky top-0 z-50 border-b border-charcoal/10 bg-warm-sand/90 backdrop-blur-md">
+      <div class="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+        <a href="#" class="shrink-0 font-serif text-2xl font-bold tracking-tight text-primary">PetExpert</a>
+        <nav class="hidden lg:flex lg:flex-1 lg:justify-center" aria-label="Main navigation">
+          <ul class="flex items-stretch gap-8">
+            <li><a href="#" class="flex h-16 items-center whitespace-nowrap font-sans text-label-bold text-charcoal/70 transition-colors hover:text-charcoal">Choosing a Pet</a></li>
+            <li><a href="#" class="flex h-16 items-center whitespace-nowrap font-sans text-label-bold text-charcoal/70 transition-colors hover:text-charcoal">Training</a></li>
+            <li><a href="#" class="flex h-16 items-center whitespace-nowrap font-sans text-label-bold text-charcoal/70 transition-colors hover:text-charcoal">Health</a></li>
+            <li><a href="#" class="flex h-16 items-center whitespace-nowrap font-sans text-label-bold text-charcoal/70 transition-colors hover:text-charcoal">Nutrition</a></li>
+            <li><a href="#" class="flex h-16 items-center whitespace-nowrap font-sans text-label-bold text-charcoal/70 transition-colors hover:text-charcoal">Pet Life</a></li>
+          </ul>
+        </nav>
+        <div class="flex shrink-0 items-center gap-1 sm:gap-2">
+          <button type="button" aria-label="Search" class="rounded-full p-2 text-charcoal/70 hover:bg-charcoal/5 hover:text-charcoal"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" /></svg></button>
+          <div class="mx-1 hidden h-5 w-px bg-charcoal/15 sm:block"></div>
+          <div class="flex items-center divide-x divide-charcoal/20 font-sans text-xs font-bold tracking-widest">
+            <a href="#" class="px-2 leading-none text-terracotta first:pl-0 last:pr-0">EN</a><a href="#" class="px-2 leading-none text-charcoal/50 hover:text-charcoal first:pl-0 last:pr-0">DE</a><a href="#" class="px-2 leading-none text-charcoal/50 hover:text-charcoal first:pl-0 last:pr-0">UK</a>
+          </div>
+          <button type="button" aria-label="Account" class="rounded-full p-2 text-charcoal/70 hover:bg-charcoal/5 hover:text-charcoal"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /></svg></button>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex-1">
+      <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+        <header class="max-w-3xl">
+          <p class="font-sans text-label-bold uppercase text-terracotta">PetExpert Recommends</p>
+          <h1 class="mt-3 font-serif text-[2rem] font-bold leading-tight text-charcoal md:text-5xl">Our Picks for Your Pets</h1>
+          <p class="mt-4 font-sans text-lg leading-relaxed text-charcoal/70">Independently tested and vet-reviewed. Every product here earns its place on merit — we may earn a commission if you buy through our links, but it never buys a spot on this page.</p>
+        </header>
+
+        <div class="mt-10 grid grid-cols-1 gap-6 md:grid-cols-12">
+          <!-- CARD 1 -->
+          <article class="relative overflow-hidden rounded-lg bg-surface-lowest shadow-sm ring-1 ring-charcoal/5 md:col-span-12">
+            <span class="absolute left-0 top-6 z-10 inline-flex items-center gap-1.5 rounded-r-full bg-terracotta py-1.5 pl-4 pr-5 font-sans text-label-sm font-bold text-warm-sand shadow-md"><svg viewBox="0 0 20 20" fill="currentColor" class="h-3.5 w-3.5"><path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.36 4.18a1 1 0 0 0 .95.69h4.4c.97 0 1.37 1.24.59 1.81l-3.56 2.59a1 1 0 0 0-.36 1.12l1.36 4.18c.3.92-.76 1.69-1.54 1.12l-3.56-2.59a1 1 0 0 0-1.18 0l-3.56 2.59c-.78.57-1.84-.2-1.54-1.12l1.36-4.18a1 1 0 0 0-.36-1.12L2.1 9.6c-.78-.57-.38-1.81.59-1.81h4.4a1 1 0 0 0 .95-.69L9.05 2.93Z" /></svg>Expert's Choice</span>
+            <div class="grid grid-cols-1 lg:grid-cols-2">
+              <div class="relative"><img src="https://pub.hyperagent.com/api/published/pbf01KWRWM6J8_46AC9PM222V4EPCE/8b69fcbe-033e-4391-a986-c90593426802.png" alt="Orthopedic dog bed" class="h-72 w-full object-cover lg:h-full" /></div>
+              <div class="flex flex-col p-6 sm:p-8 lg:p-10">
+                <div class="flex items-center gap-3">
+                  <div class="flex items-center gap-2"><div class="relative inline-flex"><div class="flex text-charcoal/15"><svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4 shrink-0"><path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.36 4.18a1 1 0 0 0 .95.69h4.4c.97 0 1.37 1.24.59 1.81l-3.56 2.59a1 1 0 0 0-.36 1.12l1.36 4.18c.3.92-.76 1.69-1.54 1.12l-3.56-2.59a1 1 0 0 0-1.18 0l-3.56 2.59c-.78.57-1.84-.2-1.54-1.12l1.36-4.18a1 1 0 0 0-.36-1.12L2.1 9.6c-.78-.57-.38-1.81.59-1.81h4.4a1 1 0 0 0 .95-.69L9.05 2.93Z" /></svg><svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4 shrink-0"><path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.36 4.18a1 1 0 0 0 .95.69h4.4c.97 0 1.37 1.24.59 1.81l-3.56 2.59a1 1 0 0 0-.36 1.12l1.36 4.18c.3.92-.76 1.69-1.54 1.12l-3.56-2.59a1 1 0 0 0-1.18 0l-3.56 2.59c-.78.57-1.84-.2-1.54-1.12l1.36-4.18a1 1 0 0 0-.36-1.12L2.1 9.6c-.78-.57-.38-1.81.59-1.81h4.4a1 1 0 0 0 .95-.69L9.05 2.93Z" /></svg><svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4 shrink-0"><path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.36 4.18a1 1 0 0 0 .95.69h4.4c.97 0 1.37 1.24.59 1.81l-3.56 2.59a1 1 0 0 0-.36 1.12l1.36 4.18c.3.92-.76 1.69-1.54 1.12l-3.56-2.59a1 1 0 0 0-1.18 0l-3.56 2.59c-.78.57-1.84-.2-1.54-1.12l1.36-4.18a1 1 0 0 0-.36-1.12L2.1 9.6c-.78-.57-.38-1.81.59-1.81h4.4a1 1 0 0 0 .95-.69L9.05 2.93Z" /></svg><svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4 shrink-0"><path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.36 4.18a1 1 0 0 0 .95.69h4.4c.97 0 1.37 1.24.59 1.81l-3.56 2.59a1 1 0 0 0-.36 1.12l1.36 4.18c.3.92-.76 1.69-1.54 1.12l-3.56-2.59a1 1 0 0 0-1.18 0l-3.56 2.59c-.78.57-1.84-.2-1.54-1.12l1.36-4.18a1 1 0 0 0-.36-1.12L2.1 9.6c-.78-.57-.38-1.81.59-1.81h4.4a1 1 0 0 0 .95-.69L9.05 2.93Z" /></svg><svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4 shrink-0"><path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.36 4.18a1 1 0 0 0 .95.69h4.4c.97 0 1.37 1.24.59 1.81l-3.56 2.59a1 1 0 0 0-.36 1.12l1.36 4.18c.3.92-.76 1.69-1.54 1.12l-3.56-2.59a1 1 0 0 0-1.18 0l-3.56 2.59c-.78.57-1.84-.2-1.54-1.12l1.36-4.18a1 1 0 0 0-.36-1.12L2.1 9.6c-.78-.57-.38-1.81.59-1.81h4.4a1 1 0 0 0 .95-.69L9.05 2.93Z" /></svg></div><div class="absolute inset-0 flex overflow-hidden text-[#e0a43b]" style="width:96%"><svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4 shrink-0"><path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.36 4.18a1 1 0 0 0 .95.69h4.4c.97 0 1.37 1.24.59 1.81l-3.56 2.59a1 1 0 0 0-.36 1.12l1.36 4.18c.3.92-.76 1.69-1.54 1.12l-3.56-2.59a1 1 0 0 0-1.18 0l-3.56 2.59c-.78.57-1.84-.2-1.54-1.12l1.36-4.18a1 1 0 0 0-.36-1.12L2.1 9.6c-.78-.57-.38-1.81.59-1.81h4.4a1 1 0 0 0 .95-.69L9.05 2.93Z" /></svg><svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4 shrink-0"><path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.36 4.18a1 1 0 0 0 .95.69h4.4c.97 0 1.37 1.24.59 1.81l-3.56 2.59a1 1 0 0 0-.36 1.12l1.36 4.18c.3.92-.76 1.69-1.54 1.12l-3.56-2.59a1 1 0 0 0-1.18 0l-3.56 2.59c-.78.57-1.84-.2-1.54-1.12l1.36-4.18a1 1 0 0 0-.36-1.12L2.1 9.6c-.78-.57-.38-1.81.59-1.81h4.4a1 1 0 0 0 .95-.69L9.05 2.93Z" /></svg><svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4 shrink-0"><path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.36 4.18a1 1 0 0 0 .95.69h4.4c.97 0 1.37 1.24.59 1.81l-3.56 2.59a1 1 0 0 0-.36 1.12l1.36 4.18c.3.92-.76 1.69-1.54 1.12l-3.56-2.59a1 1 0 0 0-1.18 0l-3.56 2.59c-.78.57-1.84-.2-1.54-1.12l1.36-4.18a1 1 0 0 0-.36-1.12L2.1 9.6c-.78-.57-.38-1.81.59-1.81h4.4a1 1 0 0 0 .95-.69L9.05 2.93Z" /></svg><svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4 shrink-0"><path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.36 4.18a1 1 0 0 0 .95.69h4.4c.97 0 1.37 1.24.59 1.81l-3.56 2.59a1 1 0 0 0-.36 1.12l1.36 4.18c.3.92-.76 1.69-1.54 1.12l-3.56-2.59a1 1 0 0 0-1.18 0l-3.56 2.59c-.78.57-1.84-.2-1.54-1.12l1.36-4.18a1 1 0 0 0-.36-1.12L2.1 9.6c-.78-.57-.38-1.81.59-1.81h4.4a1 1 0 0 0 .95-.69L9.05 2.93Z" /></svg><svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4 shrink-0"><path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.36 4.18a1 1 0 0 0 .95.69h4.4c.97 0 1.37 1.24.59 1.81l-3.56 2.59a1 1 0 0 0-.36 1.12l1.36 4.18c.3.92-.76 1.69-1.54 1.12l-3.56-2.59a1 1 0 0 0-1.18 0l-3.56 2.59c-.78.57-1.84-.2-1.54-1.12l1.36-4.18a1 1 0 0 0-.36-1.12L2.1 9.6c-.78-.57-.38-1.81.59-1.81h4.4a1 1 0 0 0 .95-.69L9.05 2.93Z" /></svg></div></div><span class="font-sans text-sm font-bold text-charcoal">4.8<span class="font-normal text-charcoal/40">/5</span></span></div>
+                  <span class="font-sans text-sm text-charcoal/50">(1,240 reviews)</span>
+                </div>
+                <h2 class="mt-3 font-serif text-2xl font-bold leading-snug text-charcoal md:text-3xl">OrthoRest Memory-Foam Orthopedic Bed</h2>
+                <p class="mt-3 font-sans leading-relaxed text-charcoal/70">A dense memory-foam core relieves pressure on aching joints, with a removable, machine-washable cover in warm, home-friendly tones. Sizes for every breed.</p>
+                <div class="mt-5 flex flex-wrap items-baseline gap-3"><span class="font-serif text-3xl font-bold text-charcoal">5 490 ₽</span><span class="font-sans text-lg text-charcoal/40 line-through">6 200 ₽</span><span class="rounded bg-terracotta/10 px-2 py-0.5 font-sans text-label-sm font-bold text-terracotta">−11%</span></div>
+                <a href="#" class="mt-6 inline-flex items-center justify-center gap-2 rounded-lg bg-terracotta px-6 py-3.5 font-sans text-label-bold text-warm-sand shadow-sm transition-colors hover:bg-terracotta/90">View on Ozon<svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4"><path fill-rule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clip-rule="evenodd" /></svg></a>
+                <figure class="mt-6 flex items-start gap-3 border-t border-charcoal/10 pt-5">
+                  <img src="https://pub.hyperagent.com/api/published/pbf01KWRWM8VH_SP5A4M3FPK7FF0VR/2ed9501b-765d-4a67-ad0c-41e6138a19c0.png" alt="Dr. Igor Melnyk" class="h-11 w-11 shrink-0 rounded-full object-cover ring-2 ring-surface-lowest" />
+                  <blockquote class="min-w-0"><p class="font-serif text-sm italic leading-relaxed text-charcoal/80">“I recommend this bed to every patient managing arthritis — the firmer foam core noticeably improves mobility within a few weeks.”</p><figcaption class="mt-1.5 font-sans text-label-sm text-charcoal/50"><span class="font-bold text-charcoal">Dr. Igor Melnyk</span> · Veterinary orthopedist</figcaption></blockquote>
+                </figure>
+              </div>
+            </div>
+          </article>
+
+          <!-- CARD 2 -->
+          <article class="flex flex-col overflow-hidden rounded-lg bg-surface-lowest shadow-sm ring-1 ring-charcoal/5 md:col-span-6">
+            <img src="https://pub.hyperagent.com/api/published/pbf01KWRWM6XR_AYS2V1YECQ938ASA/e583cf4d-9cc5-4be8-8f12-bb058ec40a2f.png" alt="Holistic dog food" class="h-52 w-full object-cover" />
+            <div class="flex flex-1 flex-col p-6">
+              <span class="inline-flex w-fit items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 font-sans text-label-sm font-bold text-primary"><svg viewBox="0 0 24 24" fill="currentColor" class="h-3.5 w-3.5"><path fill-rule="evenodd" d="M11.484 2.17a.75.75 0 0 1 1.032 0 11.2 11.2 0 0 0 7.877 3.08.75.75 0 0 1 .722.515c.42 1.256.635 2.596.635 3.985 0 5.942-4.064 10.933-9.563 12.348a.75.75 0 0 1-.374 0C6.316 20.683 2.25 15.692 2.25 9.75c0-1.39.215-2.73.635-3.985a.75.75 0 0 1 .722-.516l.143.001c2.996 0 5.718-1.17 7.734-3.08ZM15.6 10.2a.75.75 0 0 0-1.2-.9l-2.9 3.867-1.3-1.3a.75.75 0 1 0-1.06 1.06l1.92 1.92a.75.75 0 0 0 1.13-.08l3.41-4.567Z" clip-rule="evenodd" /></svg>Approved by gastroenterologists</span>
+              <h3 class="mt-3 font-serif text-xl font-bold text-charcoal">Holistic Grain-Free Digestive Care</h3>
+              <p class="mt-2 font-sans text-sm leading-relaxed text-charcoal/70">Single-source protein with prebiotic fibre — formulated for sensitive stomachs.</p>
+              <div class="mt-auto flex items-center justify-between gap-4 pt-5"><span class="font-serif text-2xl font-bold text-charcoal">3 250 ₽</span><a href="#" class="rounded-lg bg-surface-container px-5 py-2.5 font-sans text-label-bold text-charcoal transition-colors hover:bg-surface-container-high">View at PetShop</a></div>
+            </div>
+          </article>
+
+          <!-- CARD 3 -->
+          <article class="flex flex-col overflow-hidden rounded-lg bg-surface-lowest shadow-sm ring-1 ring-charcoal/5 md:col-span-3">
+            <div class="relative"><img src="https://pub.hyperagent.com/api/published/pbf01KWRWM7FR_9BSRKTPCY8FNKH75/304eaf1b-8266-4dbc-bebc-1a35c2bdf12c.png" alt="Puzzle toy" class="aspect-square w-full object-cover" /><span class="absolute left-3 top-3 rounded-full bg-charcoal/75 px-2.5 py-1 font-sans text-label-sm font-bold text-warm-sand backdrop-blur-sm">Toys</span></div>
+            <div class="flex flex-1 flex-col p-5">
+              <span class="inline-flex w-fit items-center rounded-full bg-primary/10 px-2.5 py-0.5 font-sans text-label-sm font-bold text-primary">Builds problem-solving</span>
+              <h3 class="mt-2 font-serif text-base font-bold leading-snug text-charcoal">SmartPaws Interactive Treat Puzzle</h3>
+              <div class="mt-auto pt-4"><span class="block font-serif text-xl font-bold text-charcoal">1 190 ₽</span><a href="#" class="mt-3 block w-full rounded-lg bg-surface-container px-4 py-2.5 text-center font-sans text-label-bold text-charcoal transition-colors hover:bg-surface-container-high">View on Yandex.Market</a></div>
+            </div>
+          </article>
+
+          <!-- CARD 4 -->
+          <article class="flex overflow-hidden rounded-lg bg-surface-lowest shadow-sm ring-1 ring-charcoal/5 md:col-span-3">
+            <img src="https://pub.hyperagent.com/api/published/pbf01KWRWM7WA_PR3EF0M3FA7A8H11/8fc709f4-76fa-417f-b68d-cf293a122009.png" alt="Pet first-aid kit" class="w-2/5 shrink-0 object-cover" />
+            <div class="flex flex-1 flex-col p-5">
+              <h3 class="font-serif text-base font-bold leading-snug text-charcoal">PetSafe Travel First-Aid Kit</h3>
+              <span class="mt-1 font-serif text-xl font-bold text-charcoal">2 090 ₽</span>
+              <blockquote class="mt-2 border-l-2 border-terracotta pl-3 font-serif text-sm italic leading-snug text-charcoal/70">“A must-have for weekend trips and the summer house.”<cite class="mt-1 block font-sans text-label-sm not-italic text-charcoal/50">— Dr. Smirnova</cite></blockquote>
+              <a href="#" class="group mt-auto inline-flex items-center gap-1.5 pt-4 font-sans text-label-bold text-terracotta">Go to store<svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4 transition-transform group-hover:translate-x-1"><path fill-rule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clip-rule="evenodd" /></svg></a>
+            </div>
+          </article>
+        </div>
+
+        <p class="mt-8 font-sans text-label-sm text-charcoal/50">Affiliate Disclosure: We may earn a commission when you buy through links on our site. Prices are indicative and set by the retailer.</p>
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-charcoal/10 bg-warm-sand">
+      <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div class="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
+          <div class="max-w-sm"><a href="#" class="font-serif text-2xl font-bold tracking-tight text-primary">PetExpert</a><p class="mt-3 font-serif text-lg italic text-charcoal/80">Expert Care in a Cozy Home.</p><p class="mt-5 font-sans text-label-sm text-charcoal/50">© 2026 PetExpert. All rights reserved.</p></div>
+          <nav aria-label="Footer navigation"><ul class="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-x-8 sm:gap-y-3"><li><a href="#" class="font-sans text-label-bold text-charcoal hover:text-primary">About Us</a></li><li><a href="#" class="font-sans text-label-bold text-charcoal hover:text-primary">Contact</a></li><li><a href="#" class="font-sans text-label-bold text-charcoal hover:text-primary">Privacy Policy</a></li><li><a href="#" class="font-sans text-label-bold text-charcoal hover:text-primary">Terms of Service</a></li></ul></nav>
+        </div>
+        <div class="mt-10 border-t border-charcoal/10 pt-6"><p class="max-w-2xl font-sans text-label-sm text-charcoal/50">Affiliate Disclosure: We may earn a commission when you buy through links on our site.</p></div>
+      </div>
+    </footer>
+  </body>
+</html>

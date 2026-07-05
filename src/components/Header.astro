@@ -1,0 +1,157 @@
+---
+// Global site header — "Warm Professionalism".
+// Language-aware throughout:
+//   1. Logo → /{lang}/                         (keeps the current language)
+//   2. Nav links → /{lang}/<section>/          (e.g. /de/health/)
+//   3. Language switcher → swaps ONLY the language segment of the current URL
+//      (stay on the same page). On pages that pass `localeLinks` (e.g. articles),
+//      the switcher uses those exact per-language URLs instead — so it jumps to
+//      the SAME article's translation rather than a 404.
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import { navItems, languages } from '../i18n/ui';
+
+interface Props {
+  /** Optional per-language URLs for this exact page (e.g. article translations). */
+  localeLinks?: Partial<Record<string, string>>;
+}
+const { localeLinks } = Astro.props;
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const pathname = Astro.url.pathname;
+const search = Astro.url.search;
+const localeEntries = Object.entries(languages) as [string, string][];
+
+// Generic fallback: rebuild the current path under another language, keeping the sub-path + query.
+function switchTo(code: string): string {
+  const segments = pathname.split('/');
+  if (segments[1] in languages) segments[1] = code;
+  else segments.splice(1, 0, code);
+  let path = segments.join('/');
+  if (path === `/${code}`) path = `/${code}/`;
+  return path + search;
+}
+
+// The URL a language button points to: explicit translation link if provided, else the generic swap.
+const localeHref = (code: string): string => localeLinks?.[code] ?? switchTo(code);
+
+// Active nav state: compare the path with its language prefix removed.
+function isActive(href: string): boolean {
+  let rest = '/' + pathname.split('/').slice(2).join('/');
+  rest = rest.replace(/\/$/, '') || '/';
+  return rest === href || rest.startsWith(`${href}/`);
+}
+---
+
+<header class="sticky top-0 z-50 border-b border-charcoal/10 bg-warm-sand/90 backdrop-blur-md">
+  <div class="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+    <!-- 1 · Logo → /{lang}/ -->
+    <a href={`/${lang}/`} class="shrink-0 font-serif text-2xl font-bold tracking-tight text-primary">
+      PetExpert
+    </a>
+
+    <!-- 2 · Desktop navigation → /{lang}/<section>/ -->
+    <nav class="hidden lg:flex lg:flex-1 lg:justify-center" aria-label={t('a11y.menu')}>
+      <ul class="flex items-stretch gap-8">
+        {
+          navItems.map((item) => {
+            const active = isActive(item.href);
+            return (
+              <li>
+                <a
+                  href={`/${lang}${item.href}/`}
+                  aria-current={active ? 'page' : undefined}
+                  class:list={[
+                    'group relative flex h-16 items-center whitespace-nowrap font-sans text-label-bold transition-colors',
+                    active ? 'text-charcoal' : 'text-charcoal/70 hover:text-charcoal',
+                  ]}
+                >
+                  {t(item.key)}
+                  <span
+                    aria-hidden="true"
+                    class:list={[
+                      'pointer-events-none absolute inset-x-0 bottom-0 h-[3px] rounded-t bg-terracotta transition-all duration-200 ease-out',
+                      active ? 'scale-x-100 opacity-100' : 'scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-40',
+                    ]}
+                  />
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </nav>
+
+    <!-- Right actions: search · language switcher · account -->
+    <div class="flex shrink-0 items-center gap-1 sm:gap-2">
+      <button type="button" aria-label={t('a11y.search')} class="rounded-full p-2 text-charcoal/70 transition-colors hover:bg-charcoal/5 hover:text-charcoal">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="h-5 w-5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+        </svg>
+      </button>
+
+      <div class="mx-1 hidden h-5 w-px bg-charcoal/15 sm:block"></div>
+
+      <!-- 3 · Language switcher — same page (or same article via localeLinks) -->
+      <div role="group" aria-label={t('a11y.langSwitcher')} class="flex items-center divide-x divide-charcoal/20 font-sans text-xs font-bold tracking-widest">
+        {
+          localeEntries.map(([code, label]) => (
+            <a
+              href={localeHref(code)}
+              hreflang={code}
+              aria-current={code === lang ? 'true' : undefined}
+              class:list={[
+                'px-2 leading-none transition-colors first:pl-0 last:pr-0',
+                code === lang ? 'text-terracotta' : 'text-charcoal/50 hover:text-charcoal',
+              ]}
+            >
+              {label}
+            </a>
+          ))
+        }
+      </div>
+
+      <button type="button" aria-label={t('a11y.account')} class="rounded-full p-2 text-charcoal/70 transition-colors hover:bg-charcoal/5 hover:text-charcoal">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="h-5 w-5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile navigation: horizontal scroll strip -->
+  <nav class="lg:hidden" aria-label={t('a11y.menu')}>
+    <ul class="no-scrollbar edge-fade flex items-center gap-6 overflow-x-auto border-t border-charcoal/10 px-4 py-3 sm:px-6">
+      {
+        navItems.map((item) => {
+          const active = isActive(item.href);
+          return (
+            <li class="shrink-0">
+              <a
+                href={`/${lang}${item.href}/`}
+                aria-current={active ? 'page' : undefined}
+                class:list={[
+                  'flex flex-col items-center gap-1 whitespace-nowrap font-sans text-label-bold transition-colors',
+                  active ? 'text-charcoal' : 'text-charcoal/70',
+                ]}
+              >
+                {t(item.key)}
+                <span aria-hidden="true" class:list={['h-[3px] w-full rounded-t bg-terracotta transition-opacity', active ? 'opacity-100' : 'opacity-0']} />
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </nav>
+</header>
+
+<style>
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .edge-fade {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 1.25rem, #000 calc(100% - 1.25rem), transparent);
+    mask-image: linear-gradient(to right, transparent, #000 1.25rem, #000 calc(100% - 1.25rem), transparent);
+  }
+</style>

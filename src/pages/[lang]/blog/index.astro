@@ -1,0 +1,109 @@
+---
+// Blog index: /[lang]/blog/ — lists the current language's posts with a category filter.
+// (No route collision with [...slug].astro: that route only generates /[lang]/blog/<post>,
+//  never the bare /[lang]/blog, which this index owns.)
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getLocalizedPosts, postHref } from '../../../lib/posts';
+import { getLangFromUrl, useTranslations } from '../../../i18n/utils';
+import { languages } from '../../../i18n/ui';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map((lang) => ({ params: { lang } }));
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const posts = await getLocalizedPosts(lang); // filtered by language, drafts excluded, newest first
+const categories = [...new Set(posts.map((p) => p.data.category).filter(Boolean))] as string[];
+
+const fmtDate = (d: Date | undefined) =>
+  d ? new Date(d).toLocaleDateString(lang, { year: 'numeric', month: 'short', day: 'numeric' }) : '';
+---
+
+<BaseLayout title={`${t('blog.title')} — PetExpert`} description={t('blog.intro')}>
+  <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+    <header class="max-w-3xl">
+      <h1 class="font-serif text-[2rem] font-bold leading-tight text-charcoal md:text-5xl">{t('blog.title')}</h1>
+      <p class="mt-4 font-sans text-lg leading-relaxed text-charcoal/70">{t('blog.intro')}</p>
+    </header>
+
+    {
+      categories.length > 1 && (
+        <div class="mt-8 flex flex-wrap gap-2" role="group" aria-label={t('blog.filter')}>
+          <button type="button" class="filter-chip is-active" data-filter="all">{t('blog.all')}</button>
+          {categories.map((c) => (
+            <button type="button" class="filter-chip" data-filter={c}>{c}</button>
+          ))}
+        </div>
+      )
+    }
+
+    {
+      posts.length === 0 ? (
+        <p class="mt-12 rounded-lg border border-dashed border-outline-variant bg-surface-lowest/60 p-8 text-center font-sans text-charcoal/60">
+          {t('blog.empty')}
+        </p>
+      ) : (
+        <div id="post-grid" class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {posts.map((post) => (
+            <article class="post-card" data-category={post.data.category ?? ''}>
+              <a
+                href={postHref(post, lang)}
+                class="group flex h-full flex-col overflow-hidden rounded-lg bg-surface-lowest shadow-sm ring-1 ring-charcoal/5 transition-shadow hover:shadow-md"
+              >
+                {post.data.cover && <img src={post.data.cover} alt="" class="h-44 w-full object-cover" loading="lazy" />}
+                <div class="flex flex-1 flex-col p-5">
+                  {post.data.category && (
+                    <span class="w-fit rounded-full bg-terracotta/10 px-2.5 py-0.5 font-sans text-label-sm font-bold text-terracotta">
+                      {post.data.category}
+                    </span>
+                  )}
+                  <h2 class="mt-2 font-serif text-lg font-bold leading-snug text-charcoal transition-colors group-hover:text-primary">
+                    {post.data.title}
+                  </h2>
+                  {post.data.description && (
+                    <p class="mt-2 font-sans text-sm leading-relaxed text-charcoal/70">{post.data.description}</p>
+                  )}
+                  <span class="mt-auto pt-4 font-sans text-label-sm text-charcoal/50">{fmtDate(post.data.date)}</span>
+                </div>
+              </a>
+            </article>
+          ))}
+        </div>
+      )
+    }
+  </div>
+</BaseLayout>
+
+<script>
+  // Client-side category filter — shows/hides cards, no reload.
+  const chips = document.querySelectorAll<HTMLButtonElement>('.filter-chip');
+  const cards = document.querySelectorAll<HTMLElement>('.post-card');
+  chips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      const filter = chip.dataset.filter;
+      chips.forEach((c) => c.classList.toggle('is-active', c === chip));
+      cards.forEach((card) => {
+        const show = filter === 'all' || card.dataset.category === filter;
+        card.toggleAttribute('hidden', !show);
+      });
+    });
+  });
+</script>
+
+<style>
+  .filter-chip {
+    border-radius: 9999px;
+    padding: 0.4rem 1rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    background: #f7efe9; /* surface-container */
+    color: #1e1b18; /* charcoal */
+    transition: background-color 0.15s ease;
+  }
+  .filter-chip:hover { background: #f0e5dd; } /* surface-container-high */
+  .filter-chip.is-active { background: #334f2b; color: #fff8f5; } /* primary / warm-sand */
+</style>
