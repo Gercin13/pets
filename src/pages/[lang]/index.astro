@@ -4,7 +4,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { languages } from '../../i18n/ui';
 import { getLangFromUrl, useTranslations, localizePath } from '../../i18n/utils';
-import { getSectionPosts, postHref } from '../../lib/posts';
+import { getSectionPosts, getPostByKey, postHref } from '../../lib/posts';
 
 export function getStaticPaths() {
   return Object.keys(languages).map((lang) => ({ params: { lang } }));
@@ -24,8 +24,18 @@ const featured = {
   avatar: '/img/authors/anna-smirnova.jpg',
   href: nutritionPosts[0] ? postHref(nutritionPosts[0], lang) : localizePath('/nutrition', lang),
 };
-const card1 = { image: '/img/home/kitten.jpg', href: localizePath('/health', lang) };
-const card2 = { image: '/img/home/senior-dog.jpg', href: localizePath('/health', lang) };
+// Both teaser cards now link to the real article matching their (already-translated)
+// title/category copy below — falls back to /health if that article is ever removed.
+const kittenPost = await getPostByKey(lang, 'new-kitten-first-30-days');
+const seniorPost = await getPostByKey(lang, 'senior-dog-care');
+const card1 = {
+  image: '/img/home/kitten.jpg',
+  href: kittenPost ? postHref(kittenPost, lang) : localizePath('/health', lang),
+};
+const card2 = {
+  image: '/img/home/senior-dog.jpg',
+  href: seniorPost ? postHref(seniorPost, lang) : localizePath('/health', lang),
+};
 
 const arrow =
   'M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z';

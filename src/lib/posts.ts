@@ -33,8 +33,14 @@ export function postHref(post: CollectionEntry<'blog'>, lang: Lang): string {
 }
 
 /** translationKey if set, else the file name — so same-named files across languages link up. */
-function keyOf(post: CollectionEntry<'blog'>): string {
+export function keyOf(post: CollectionEntry<'blog'>): string {
   return post.data.translationKey ?? postName(post.slug);
+}
+
+/** A single published post for one locale, matched by its translationKey (or file name). */
+export async function getPostByKey(lang: Lang, key: string): Promise<CollectionEntry<'blog'> | undefined> {
+  const all = await getCollection('blog');
+  return all.find((p) => p.slug.startsWith(`${lang}/`) && !p.data.draft && keyOf(p) === key);
 }
 
 /**
