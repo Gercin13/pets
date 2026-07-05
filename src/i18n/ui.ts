@@ -67,6 +67,14 @@ export const ui = {
     'home.news.placeholder': 'Your email address',
     'home.news.cta': 'Subscribe',
     'cat.intro': 'Expert, vet-reviewed articles — practical guidance you can trust.',
+    'cat.choosing.intro':
+      'Thinking about adding a pet to your family? Breed guides, adoption advice, and honest comparisons to help you choose with confidence.',
+    'cat.training.intro':
+      'Positive, vet-approved training methods — from the first days home to solving stubborn behavior problems.',
+    'cat.nutrition.intro':
+      'Science-backed feeding advice — how to read labels, choose the right diet, and avoid common mistakes.',
+    'cat.petLife.intro':
+      'Everyday life with your pet — home safety, travel, routines, and the small things that make a big difference.',
     'cat.explore': 'Fresh articles are on the way. In the meantime, explore:',
     'err.title': 'Page not found',
     'err.text': 'The page you’re looking for doesn’t exist or has moved.',
@@ -133,6 +141,14 @@ export const ui = {
     'home.news.placeholder': 'Ihre E-Mail-Adresse',
     'home.news.cta': 'Abonnieren',
     'cat.intro': 'Von Tierärzten geprüfte Artikel — praxisnah und verlässlich.',
+    'cat.choosing.intro':
+      'Sie überlegen, ein Haustier aufzunehmen? Rasseporträts, Adoptionstipps und ehrliche Vergleiche für eine sichere Entscheidung.',
+    'cat.training.intro':
+      'Positive, tierärztlich empfohlene Trainingsmethoden — von den ersten Tagen zu Hause bis zu hartnäckigen Verhaltensproblemen.',
+    'cat.nutrition.intro':
+      'Wissenschaftlich fundierte Fütterungstipps — Etiketten richtig lesen, die passende Ernährung wählen und häufige Fehler vermeiden.',
+    'cat.petLife.intro':
+      'Der Alltag mit Ihrem Haustier — Sicherheit zu Hause, Reisen, Routinen und die kleinen Dinge, die einen großen Unterschied machen.',
     'cat.explore': 'Neue Artikel folgen in Kürze. Entdecken Sie in der Zwischenzeit:',
     'err.title': 'Seite nicht gefunden',
     'err.text': 'Die gesuchte Seite existiert nicht oder wurde verschoben.',
@@ -198,6 +214,14 @@ export const ui = {
     'home.news.placeholder': 'Ваша електронна адреса',
     'home.news.cta': 'Підписатися',
     'cat.intro': 'Статті, перевірені ветеринарами — практичні поради, яким можна довіряти.',
+    'cat.choosing.intro':
+      'Плануєте завести улюбленця? Огляди порід, поради з усиновлення та чесні порівняння, які допоможуть обрати впевнено.',
+    'cat.training.intro':
+      'Позитивні методи дресирування, схвалені ветеринарами, — від перших днів удома до подолання складної поведінки.',
+    'cat.nutrition.intro':
+      'Науково обґрунтовані поради з харчування — як читати етикетки, обрати правильний раціон і уникнути типових помилок.',
+    'cat.petLife.intro':
+      'Щоденне життя з улюбленцем — безпека вдома, подорожі, режим дня і дрібниці, які змінюють усе.',
     'cat.explore': 'Нові статті вже готуються. А поки що перегляньте:',
     'err.title': 'Сторінку не знайдено',
     'err.text': 'Сторінки, яку ви шукаєте, не існує або її переміщено.',

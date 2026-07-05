@@ -12,6 +12,16 @@ export async function getLocalizedPosts(lang: Lang): Promise<CollectionEntry<'bl
     .sort((a, b) => +new Date(b.data.date) - +new Date(a.data.date));
 }
 
+/** Published posts for one locale AND one nav section (e.g. "training"), newest first. */
+export async function getSectionPosts(lang: Lang, section: string): Promise<CollectionEntry<'blog'>[]> {
+  const all = await getCollection('blog');
+  return all
+    .filter((p) => p.slug.startsWith(`${lang}/`))
+    .filter((p) => !p.data.draft)
+    .filter((p) => p.data.section === section)
+    .sort((a, b) => +new Date(b.data.date) - +new Date(a.data.date));
+}
+
 /** Post name without the leading language segment: "de/my-post" → "my-post". */
 export function postName(slug: string): string {
   return slug.split('/').slice(1).join('/');

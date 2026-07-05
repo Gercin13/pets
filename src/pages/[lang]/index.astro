@@ -4,6 +4,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { languages } from '../../i18n/ui';
 import { getLangFromUrl, useTranslations, localizePath } from '../../i18n/utils';
+import { getSectionPosts, postHref } from '../../lib/posts';
 
 export function getStaticPaths() {
   return Object.keys(languages).map((lang) => ({ params: { lang } }));
@@ -13,13 +14,15 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 // Non-translatable content (media, proper nouns, links).
-// NOTE: teaser links point to real, existing section pages until individual articles are written.
 const heroImage = '/img/home/hero-sofa.jpg';
+// Featured card links to the real nutrition article (newest in the section).
+// Falls back to the section page if no nutrition articles exist yet.
+const nutritionPosts = await getSectionPosts(lang, 'nutrition');
 const featured = {
   image: '/img/home/natural-feeding.jpg',
   author: 'Dr. Anna Smirnova',
   avatar: '/img/authors/anna-smirnova.jpg',
-  href: localizePath('/nutrition', lang),
+  href: nutritionPosts[0] ? postHref(nutritionPosts[0], lang) : localizePath('/nutrition', lang),
 };
 const card1 = { image: '/img/home/kitten.jpg', href: localizePath('/health', lang) };
 const card2 = { image: '/img/home/senior-dog.jpg', href: localizePath('/health', lang) };

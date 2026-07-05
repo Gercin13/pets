@@ -1,36 +1,63 @@
 ---
-// Generic category page for the nav sections that don't (yet) have a bespoke page:
-// choosing-a-pet, training, nutrition, pet-life. (Health has its own health.astro;
-// Best Picks has best-picks.astro — both excluded below so routes don't collide.)
-// Localized heading via the matching nav key; scaffolded body links to real sections.
+// Category page for the 4 nav sections that share this template: choosing-a-pet,
+// training, nutrition, pet-life. (Health has its own health.astro; Best Picks has
+// best-picks.astro — both excluded below so routes don't collide.)
+// Each section shows its own localized intro + its own real articles from the blog
+// collection (matched via the `section` frontmatter field), so every locale gets
+// genuinely different, translated content instead of one shared generic scaffold.
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { languages, navItems } from '../../i18n/ui';
+import { languages, navItems, type UIKey } from '../../i18n/ui';
 import { getLangFromUrl, useTranslations, localizePath } from '../../i18n/utils';
+import { getSectionPosts, postHref } from '../../lib/posts';
 
 export function getStaticPaths() {
   const dedicated = new Set(['/health', '/best-picks', '/blog']); // these have their own pages
   const cats = navItems.filter((i) => !dedicated.has(i.href));
+  // Each section's localized intro lives under `cat.<slug>.intro` in src/i18n/ui.ts.
+  const introKeyFor: Record<string, UIKey> = {
+    'choosing-a-pet': 'cat.choosing.intro',
+    training: 'cat.training.intro',
+    nutrition: 'cat.nutrition.intro',
+    'pet-life': 'cat.petLife.intro',
+  };
   return Object.keys(languages).flatMap((lang) =>
-    cats.map((i) => ({ params: { lang, category: i.href.slice(1) }, props: { navKey: i.key } })),
+    cats.map((i) => {
+      const section = i.href.slice(1);
+      return {
+        params: { lang, category: section },
+        props: { navKey: i.key, introKey: introKeyFor[section], section },
+      };
+    }),
   );
 }
 
-const { navKey } = Astro.props as { navKey: Parameters<ReturnType<typeof useTranslations>>[0] };
+const { navKey, introKey, section } = Astro.props as {
+  navKey: Parameters<ReturnType<typeof useTranslations>>[0];
+  introKey: Parameters<ReturnType<typeof useTranslations>>[0];
+  section: string;
+};
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const title = t(navKey);
+const intro = t(introKey);
+
+const posts = await getSectionPosts(lang, section); // this section's real, translated articles
+const fmtDate = (d: Date | undefined) =>
+  d ? new Date(d).toLocaleDateString(lang, { year: 'numeric', month: 'short', day: 'numeric' }) : '';
 
 const arrow =
   'M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z';
 
-// Real, always-available destinations to guide visitors while this section fills up.
+// Fallback destinations while a section has zero published articles. Kept for
+// forward-compatibility (e.g. a draft gets unpublished) — every section already
+// has at least one real article below, so this branch is currently unused.
 const explore = [
   { title: t('nav.health'), image: '/img/health/sleeping-dog.jpg', href: localizePath('/health', lang) },
   { title: t('nav.picks'), image: '/img/picks/ortho-bed.jpg', href: localizePath('/best-picks', lang) },
 ];
 ---
 
-<BaseLayout title={`${title} — PetExpert`} description={t('cat.intro')}>
+<BaseLayout title={`${title} — PetExpert`} description={intro}>
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <!-- Breadcrumbs -->
     <nav aria-label="Breadcrumb" class="pt-6">
@@ -44,7 +71,7 @@ const explore = [
     <!-- Header -->
     <header class="max-w-3xl pb-10 pt-6">
       <h1 class="font-serif text-[2rem] font-bold leading-tight text-charcoal md:text-5xl">{title}</h1>
-      <p class="mt-4 font-sans text-lg leading-relaxed text-charcoal/70">{t('cat.intro')}</p>
+      <p class="mt-4 font-sans text-lg leading-relaxed text-charcoal/70">{intro}</p>
     </header>
 
     <div class="grid grid-cols-1 gap-8 pb-16 lg:grid-cols-4">
@@ -76,22 +103,50 @@ const explore = [
         </div>
       </aside>
 
-      <!-- Main: scaffolded state + real cross-links -->
+      <!-- Main: this section's real articles, or a graceful fallback if none yet -->
       <div class="lg:col-span-3">
-        <div class="rounded-lg border border-dashed border-outline-variant bg-surface-lowest/60 p-8 text-center">
-          <p class="font-sans text-charcoal/70">{t('cat.explore')}</p>
-        </div>
-        <div class="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
-          {explore.map((c) => (
-            <a href={c.href} class="group flex flex-col overflow-hidden rounded-lg bg-surface-lowest shadow-sm ring-1 ring-charcoal/5 transition-shadow hover:shadow-md">
-              <img src={c.image} alt="" class="h-44 w-full object-cover" loading="lazy" />
-              <div class="flex items-center justify-between gap-3 p-5">
-                <h3 class="font-serif text-lg font-bold text-charcoal transition-colors group-hover:text-primary">{c.title}</h3>
-                <svg viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5 shrink-0 text-primary transition-transform group-hover:translate-x-1"><path fill-rule="evenodd" d={arrow} clip-rule="evenodd" /></svg>
-              </div>
-            </a>
-          ))}
-        </div>
+        {posts.length > 0 ? (
+          <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+            {posts.map((post) => (
+              <article class="flex flex-col overflow-hidden rounded-lg bg-surface-lowest shadow-sm ring-1 ring-charcoal/5 transition-shadow hover:shadow-md">
+                <a href={postHref(post, lang)} class="group flex h-full flex-col">
+                  {post.data.cover && <img src={post.data.cover} alt="" class="h-44 w-full object-cover" loading="lazy" />}
+                  <div class="flex flex-1 flex-col p-5">
+                    {post.data.category && (
+                      <span class="w-fit rounded-full bg-terracotta/10 px-2.5 py-0.5 font-sans text-label-sm font-bold text-terracotta">
+                        {post.data.category}
+                      </span>
+                    )}
+                    <h2 class="mt-2 font-serif text-lg font-bold leading-snug text-charcoal transition-colors group-hover:text-primary">
+                      {post.data.title}
+                    </h2>
+                    {post.data.description && (
+                      <p class="mt-2 font-sans text-sm leading-relaxed text-charcoal/70">{post.data.description}</p>
+                    )}
+                    <span class="mt-auto pt-4 font-sans text-label-sm text-charcoal/50">{fmtDate(post.data.date)}</span>
+                  </div>
+                </a>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <>
+            <div class="rounded-lg border border-dashed border-outline-variant bg-surface-lowest/60 p-8 text-center">
+              <p class="font-sans text-charcoal/70">{t('cat.explore')}</p>
+            </div>
+            <div class="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
+              {explore.map((c) => (
+                <a href={c.href} class="group flex flex-col overflow-hidden rounded-lg bg-surface-lowest shadow-sm ring-1 ring-charcoal/5 transition-shadow hover:shadow-md">
+                  <img src={c.image} alt="" class="h-44 w-full object-cover" loading="lazy" />
+                  <div class="flex items-center justify-between gap-3 p-5">
+                    <h3 class="font-serif text-lg font-bold text-charcoal transition-colors group-hover:text-primary">{c.title}</h3>
+                    <svg viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5 shrink-0 text-primary transition-transform group-hover:translate-x-1"><path fill-rule="evenodd" d={arrow} clip-rule="evenodd" /></svg>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </div>
   </div>

@@ -11,6 +11,12 @@ const blog = defineCollection({
     description: z.string().optional(),
     date: z.coerce.date(),
     category: z.string().optional(),
+    // Stable nav-section slug (e.g. "training", "nutrition") this article belongs to —
+    // separate from `category`, which is a localized display label. Used by
+    // [category].astro to show each section's own real articles instead of a
+    // generic shared scaffold. Optional so existing posts (e.g. the Health article)
+    // are unaffected.
+    section: z.string().optional(),
     cover: z.string().optional(),
     author: z.string().optional(),
     draft: z.boolean().default(false),
